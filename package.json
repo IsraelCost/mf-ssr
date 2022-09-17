@@ -9,7 +9,7 @@
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "build:start": "cd dist && PORT=3000 npx serve",
-    "start": "nodemon node ./server-build/index.js",
+    "start": "node ./server-build/index.js",
     "start:live": "webpack serve --open --mode development --live-reload --hot"
   },
   "license": "MIT",
