@@ -4,6 +4,8 @@
   "scripts": {
     "dev:build-server": "webpack --config webpack.server.js --mode=development -w",
     "dev:build-client": "webpack --config webpack.config.js --mode=development -w",
+    "build-server": "webpack --config webpack.server.js --mode=production",
+    "build-client": "webpack --config webpack.config.js --mode=production",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "build:start": "cd dist && PORT=3000 npx serve",
