@@ -1,10 +1,9 @@
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const path = require('path')
-const deps = require("./package.json").dependencies;
 
 module.exports = {
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist', 'public'),
     filename: 'main.js'
   },
   resolve: {
@@ -39,23 +38,13 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: ".",
+      name: "ssr",
       filename: "remoteEntry.js",
       remotes: {
-        header: 'header@https://header-mf.vercel.app/remoteEntry.js'
+        header: 'header@https://s3.sa-east-1.amazonaws.com/smartcity-v2.0/test/dist/remoteEntry.js'
       },
       exposes: {},
-      shared: {
-        ...deps,
-        react: {
-          singleton: true,
-          requiredVersion: deps.react,
-        },
-        "react-dom": {
-          singleton: true,
-          requiredVersion: deps["react-dom"],
-        },
-      },
+      shared: {},
     })
   ],
 };

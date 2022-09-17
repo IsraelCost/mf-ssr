@@ -1,16 +1,16 @@
-import React from 'react'
-// @ts-ignore
-import App from './app.tsx'
 import express from 'express'
-import ReactDOMServer from 'react-dom/server'
+import cors from 'cors'
 
 const app = express()
 
-app.use(express.static('dist'))
+app.use(cors())
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
 app.get('/share/:id', (req, res) => {
   global.window = {} as any
-  // const component = ReactDOMServer.renderToString(React.createElement(App))
   const { id } = req.params
   const html = `
     <!DOCTYPE html>
@@ -23,12 +23,16 @@ app.get('/share/:id', (req, res) => {
     </head>
     <body>
       <div id="app"></div>
-      <script src="http://localhost/main.js"></script>
+      <script src="/public/main.js"></script>
     </body>
     </html>
   `
-  return res.send(html)
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  res.end(html)
 })
+
+app.use(express.static('dist'))
 
 app.listen(80, () => {
   console.log(`Server running at 80`)

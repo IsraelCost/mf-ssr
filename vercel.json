@@ -1,9 +1,10 @@
 {
-  "version": 2,
   "builds": [
-    { "src": "/(.*)", "use": "@vercel/node" }
+    { "src": "server-build/index.js", "use": "@vercel/node" },
+    { "src": "dist/public/**", "use": "@vercel/static", "config": { "includeFiles": ["dist/public/**"] } }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/" }
+    { "src": "/public/(.*)", "dest": "/dist/public/$1" },
+    { "src": "/(.*)", "dest": "/server-build/index.js" }
   ]
 }
